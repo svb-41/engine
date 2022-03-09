@@ -21,6 +21,11 @@ import { trigo } from '../helpers'
 import { Channel } from './comm'
 const { TWO_PI } = trigo
 
+export * as control from './control'
+export * as comm from './comm'
+export * as ship from './ship'
+export * as config from './config'
+
 type Message = any
 export class Engine extends EventTarget {
   state: State
