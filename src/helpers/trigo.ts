@@ -25,7 +25,7 @@ export const angle = ({ source, target }: Angle): number => {
 }
 
 export type FindDirection = {
-  ship: ControlPanel
+  ship: ControlPanel | BulletControlPanel
   source: Position
   target: Position
   delay?: number
@@ -35,12 +35,7 @@ export const findDirection = ({
   source,
   target,
   delay = 1,
-}: {
-  ship: ControlPanel | BulletControlPanel
-  source: Position
-  target: Position
-  delay?: number
-}): Instruction => {
+}: FindDirection): Instruction => {
   const deltaAngle =
     (angle({
       source,
@@ -51,6 +46,15 @@ export const findDirection = ({
     TWO_PI
   return ship.turn(-deltaAngle + Math.PI)
 }
+
+export type Aim = {
+  ship: ControlPanel
+  source: Position
+  target: Position
+  delay?: number
+  threshold?: number
+  weapon?: number
+}
 export const aim = ({
   ship,
   source,
@@ -58,14 +62,7 @@ export const aim = ({
   delay = 1,
   threshold = 0.1,
   weapon = 0,
-}: {
-  ship: ControlPanel
-  source: Position
-  target: Position
-  delay?: number
-  threshold?: number
-  weapon?: number
-}): Instruction => {
+}: Aim): Instruction => {
   const deltaAngle =
     (angle({
       source,

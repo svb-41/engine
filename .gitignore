@@ -4,6 +4,9 @@ node_modules/
 # TypeScript compilation result
 build/
 raw/
+types.js
+types.d.ts
+types.d.ts.map
 
 # OS Stuff
 .DS_Store

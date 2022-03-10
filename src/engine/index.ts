@@ -195,8 +195,8 @@ const instructionFire = ({
   if (weapon.coolDown > 0 || weapon.amo === 0) return ship
 
   const controller =
-    weapon.bullet.builder && fire?.conf
-      ? weapon.bullet.builder()(fire.conf)
+    weapon.bullet.builder && fire?.target
+      ? weapon.bullet.builder()(fire.target)
       : undefined
 
   const bullet: Bullet = {

@@ -1,75 +1,73 @@
 import { Ship, RadarResult, Bullet } from './ship'
 import { Message } from './comm'
-export type GetInstruction<Data> = (
-  ship: Ship,
-  radar: Array<RadarResult>,
-  data: Data
-) => Instruction
 
 export type Comm = {
   getNewMessages: () => Array<Message>
   sendMessage: (message: any) => void
 }
 
-export type ControllerArgs = {
+export type ControllerArgs<Data = any> = {
   stats: Ship
   radar: Array<RadarResult>
-  memory: any
+  memory: Data
   comm: Comm
   ship: ControlPanel
 }
 
-export class Controller<Data> {
-  data: any
-  shipId: string
-  getInstruction: (args: ControllerArgs) => Instruction
+// prettier-ignore
+export type NextShipInstruction<Data = any> = (args: ControllerArgs<Data>) => Instruction
+export class Controller<Data = any> {
+  #data: any
+  #shipId: string
+  #getInstruction: NextShipInstruction
 
   constructor(
     shipId: string,
-    getInstruction: (args: ControllerArgs) => Instruction,
+    getInstruction: NextShipInstruction,
     initialData?: Data
   ) {
-    this.data = initialData
-    this.shipId = shipId
-    this.getInstruction = getInstruction
+    this.#data = initialData
+    this.#shipId = shipId
+    this.#getInstruction = getInstruction
   }
 
-  next = (ship: Ship, comm: Comm, radar: Array<RadarResult>) =>
-    this.getInstruction({
+  next = (ship: Ship, comm: Comm, radar: Array<RadarResult>) => {
+    return this.#getInstruction({
       stats: ship,
       radar,
       comm,
-      memory: this.data,
+      memory: this.#data,
       ship: controlPanel(ship),
     })
+  }
 }
 
-export type BulletControllerArgs = {
+export type BulletControllerArgs<Data = any> = {
   stats: Bullet
   radar: Array<RadarResult>
-  memory: any
+  memory: Data
   bullet: BulletControlPanel
 }
 
-export class BulletController<Data> {
-  data: any
-  getInstruction: (args: BulletControllerArgs) => Instruction
+// prettier-ignore
+export type NextBulletInstruction<Data = any> = (args: BulletControllerArgs<Data>) => Instruction
+export class BulletController<Data = any> {
+  #data: any
+  #getInstruction: NextBulletInstruction<Data>
 
-  constructor(
-    getInstruction: (args: BulletControllerArgs) => Instruction,
-    initialData?: Data
-  ) {
-    this.data = initialData
-    this.getInstruction = getInstruction
+  constructor(getInstruction: NextBulletInstruction<Data>, initialData?: Data) {
+    this.#data = initialData
+    this.#getInstruction = getInstruction
   }
 
-  next = (bullet: Bullet, radar: Array<RadarResult>) =>
-    this.getInstruction({
+  next = (bullet: Bullet, radar: Array<RadarResult>) => {
+    return this.#getInstruction({
       stats: bullet,
       radar,
-      memory: this.data,
+      memory: this.#data,
       bullet: bulletControlPanel(bullet),
     })
+  }
 }
 
 export enum INSTRUCTION {
@@ -80,41 +78,26 @@ export enum INSTRUCTION {
   THRUST = 'THRUST',
 }
 
-export type Idle = {
-  id: INSTRUCTION.IDLE
-}
-export type Turn = {
-  id: INSTRUCTION.TURN
-  arg: number
-}
-export type Thrust = {
-  id: INSTRUCTION.THRUST
-  arg: number
-}
-export type Fire = {
-  id: INSTRUCTION.FIRE
-  arg: number
-  conf?: { target?: { x: number; y: number }; armedTime?: number }
-}
+export type Target = { target?: { x: number; y: number }; armedTime?: number }
+export type Idle = { id: INSTRUCTION.IDLE }
+export type Turn = { id: INSTRUCTION.TURN; arg: number }
+export type Thrust = { id: INSTRUCTION.THRUST; arg: number }
+export type Fire = { id: INSTRUCTION.FIRE; arg: number; target?: Target }
 export type Instruction = Idle | Turn | Thrust | Fire
 
 export const idle = (): Idle => ({ id: INSTRUCTION.IDLE })
 export const turn = (arg: number): Turn => ({ id: INSTRUCTION.TURN, arg })
 export const thrust = (arg: number): Thrust => ({ id: INSTRUCTION.THRUST, arg })
-export const fire = (
-  arg: number,
-  conf?: { target?: { x: number; y: number }; armedTime?: number }
-): Fire => ({ id: INSTRUCTION.FIRE, arg, conf })
+export const fire = (arg: number, target?: Target): Fire => {
+  return { id: INSTRUCTION.FIRE, arg, target }
+}
 
 export type ControlPanel = {
   idle: () => Idle
   turn: (arg?: number) => Turn
   turnRight: (arg?: number) => Turn
   turnLeft: (arg?: number) => Turn
-  fire: (
-    arg?: number,
-    target?: { target?: { x: number; y: number }; armedTime?: number }
-  ) => Fire
+  fire: (arg?: number, target?: Target) => Fire
   thrust: (arg?: number) => Thrust
 }
 
