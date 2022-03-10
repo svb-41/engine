@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "@svb-41/engine",
   "version": "0.2.0",
   "main": "build/index.js",
@@ -18,8 +17,8 @@
     "prepare": "yarn build",
     "build": "yarn build:module && yarn build:raw && yarn build:convert-raw",
     "build:module": "tsc",
-    "build:raw": "tsc --outFile types.js --emitDeclarationOnly",
-    "build:convert-raw": "node scripts/prepare.js"
+    "build:raw": "tsc --outFile types.js --emitDeclarationOnly --declarationMap false",
+    "build:convert-raw": "node scripts/prepare.mjs"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
@@ -32,6 +31,7 @@
   },
   "files": [
     "build/",
+    "types.d.ts",
     "types.js"
   ]
 }

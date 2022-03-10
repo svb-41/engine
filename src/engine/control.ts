@@ -19,11 +19,11 @@ export type NextShipInstruction<Data = any> = (args: ControllerArgs<Data>) => In
 export class Controller<Data = any> {
   #data: any
   #shipId: string
-  #getInstruction: NextShipInstruction
+  #getInstruction: NextShipInstruction<Data>
 
   constructor(
     shipId: string,
-    getInstruction: NextShipInstruction,
+    getInstruction: NextShipInstruction<Data>,
     initialData?: Data
   ) {
     this.#data = initialData
