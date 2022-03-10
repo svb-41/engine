@@ -8,6 +8,10 @@
     "Guillaume Hivert <hivert.is.coming@gmail.com>",
     "Arthur Escriou <arthur.escriou@gmail.com>"
   ],
+  "keywords": [
+    "starships",
+    "game"
+  ],
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf build",
