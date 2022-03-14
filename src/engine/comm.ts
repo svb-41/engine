@@ -13,7 +13,8 @@ export class Channel<Data = any> {
   }
 
   /** Send a message on the channel, providing the payload. */
-  sendMessage = (message: Message<Data>) => {
+  sendMessage = (content: Data) => {
+    const message = { timeSend: Date.now(), content }
     this.#history.push(message)
   }
 
