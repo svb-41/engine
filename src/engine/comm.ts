@@ -1,21 +1,36 @@
-export type Message = {
+export type Message<Data = any> = {
   timeSend: number
-  content: any
+  content: Data
 }
 
-export class Channel {
-  id: string
-  history: Array<Message> = []
+/** Communication channel. Accept messages and let read them through history. */
+export class Channel<Data = any> {
+  #id: string
+  #history: Array<Message<Data>> = []
 
   constructor(id: string) {
-    this.id = id
+    this.#id = id
   }
 
-  sendMessage(message: Message) {
-    this.history.push(message)
+  /** Send a message on the channel, providing the payload. */
+  sendMessage = (message: Message<Data>) => {
+    this.#history.push(message)
   }
 
-  getNewMessages(time: number): Array<Message> {
-    return this.history.filter(m => m.timeSend > time)
+  /** Get the messages since the requested time. */
+  messagesSince = (time: number) => {
+    return this.#history.filter(message => {
+      return message.timeSend > time
+    })
+  }
+
+  /** The ID of a channel is an UUID. */
+  get id() {
+    return this.#id
+  }
+
+  /** history can be explored in a readonly way. */
+  get history() {
+    return this.#history
   }
 }

@@ -1,12 +1,10 @@
 import { Ship, RadarResult, Bullet } from './ship'
-import { Message } from './comm'
+import { Channel } from './comm'
 
-export type Comm = {
-  getNewMessages: () => Array<Message>
-  sendMessage: (message: any) => void
-}
+export type Comm<Data = any> = Channel<Data>
 
-export type ControllerArgs<Data = any> = {
+export type AI<Data = any> = (args: Context<Data>) => Instruction
+export type Context<Data = any> = {
   stats: Ship
   radar: Array<RadarResult>
   memory: Data
@@ -14,35 +12,7 @@ export type ControllerArgs<Data = any> = {
   ship: ControlPanel
 }
 
-// prettier-ignore
-export type NextShipInstruction<Data = any> = (args: ControllerArgs<Data>) => Instruction
-export class Controller<Data = any> {
-  #data: any
-  #shipId: string
-  #getInstruction: NextShipInstruction<Data>
-
-  constructor(
-    shipId: string,
-    getInstruction: NextShipInstruction<Data>,
-    initialData?: Data
-  ) {
-    this.#data = initialData
-    this.#shipId = shipId
-    this.#getInstruction = getInstruction
-  }
-
-  next = (ship: Ship, comm: Comm, radar: Array<RadarResult>) => {
-    return this.#getInstruction({
-      stats: ship,
-      radar,
-      comm,
-      memory: this.#data,
-      ship: controlPanel(ship),
-    })
-  }
-}
-
-export type BulletControllerArgs<Data = any> = {
+export type BulletContext<Data = any> = {
   stats: Bullet
   radar: Array<RadarResult>
   memory: Data
@@ -50,12 +20,12 @@ export type BulletControllerArgs<Data = any> = {
 }
 
 // prettier-ignore
-export type NextBulletInstruction<Data = any> = (args: BulletControllerArgs<Data>) => Instruction
+export type BulletAI<Data = any> = (args: BulletContext<Data>) => Instruction
 export class BulletController<Data = any> {
   #data: any
-  #getInstruction: NextBulletInstruction<Data>
+  #getInstruction: BulletAI<Data>
 
-  constructor(getInstruction: NextBulletInstruction<Data>, initialData?: Data) {
+  constructor(getInstruction: BulletAI<Data>, initialData?: Data) {
     this.#data = initialData
     this.#getInstruction = getInstruction
   }
