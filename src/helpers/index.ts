@@ -1,6 +1,7 @@
 export * as console from './console'
-export * as trigo from './trigo'
+export * as geometry from './geometry'
 export * as events from './events'
 export * as strings from './strings'
 export * as settings from './settings'
 export * as keyboard from './keyboard'
+export * as radar from './radar'

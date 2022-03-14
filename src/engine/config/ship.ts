@@ -128,7 +128,7 @@ export const DESTROYER: Ship = {
   ],
 }
 
-export const BASIC_BASE: Ship = {
+export const MOTHER_BASE: Ship = {
   id: 'base',
   shipClass: SHIP_CLASS.BASE,
   position: {
