@@ -17,9 +17,9 @@ import {
   idle,
   INSTRUCTION,
 } from './control'
-import { trigo } from '../helpers'
+import { geometry } from '../helpers'
 import { Channel } from './comm'
-const { TWO_PI } = trigo
+const { TWO_PI } = geometry
 
 export * as control from './control'
 export * as comm from './comm'

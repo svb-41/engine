@@ -47,7 +47,7 @@ type HomingTarget = { target: Target; armedTime: number }
 
 const navigateTo = ({ bullet, stats, memory }: BulletContext) => {
   if (stats.position.speed < 0.6) return bullet.thrust(0.1)
-  return geometry.findDirection({
+  return geometry.turnToTarget({
     ship: bullet,
     source: stats.position,
     target: { direction: 0, speed: 0, pos: memory.target },
@@ -63,7 +63,7 @@ const homeTo = ({ bullet, stats, memory, radar }: BulletContext) => {
   if (memory.armedTime < 0) {
     const near = nearestEnemy(radar, stats.position)
     if (near) {
-      return geometry.findDirection({
+      return geometry.turnToTarget({
         ship: bullet,
         source: stats.position,
         target: {
@@ -74,7 +74,7 @@ const homeTo = ({ bullet, stats, memory, radar }: BulletContext) => {
       })
     }
   }
-  return geometry.findDirection({
+  return geometry.turnToTarget({
     ship: bullet,
     source: stats.position,
     target: {
@@ -94,7 +94,7 @@ const mineTo = ({ bullet, stats, memory, radar }: BulletContext) => {
     const near = nearestEnemy(radar, stats.position)
     if (near) {
       if (stats.position.speed < 0.2) return bullet.thrust()
-      return geometry.findDirection({
+      return geometry.turnToTarget({
         ship: bullet,
         source: stats.position,
         target: {
@@ -114,7 +114,7 @@ const mineTo = ({ bullet, stats, memory, radar }: BulletContext) => {
   } else {
     if (stats.position.speed < 0.1) return bullet.thrust(0.1)
   }
-  return geometry.findDirection({
+  return geometry.turnToTarget({
     ship: bullet,
     source: stats.position,
     target: {
