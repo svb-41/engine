@@ -22,6 +22,7 @@ export function closeEnemies(
 }
 
 const enemyByDist = (enemies: Enemy[]) => {
+  if (enemies.length === 0) return
   return enemies.reduce((acc, val) => (acc.dist2 > val.dist2 ? val : acc))
 }
 
