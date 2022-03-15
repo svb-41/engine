@@ -61,16 +61,17 @@ const homeTo = ({ bullet, stats, memory, radar }: BulletContext) => {
   if (stats.position.speed < 0.6) return bullet.thrust(0.1)
   memory.armedTime--
   if (memory.armedTime < 0) {
-    const near = nearestEnemy(radar, stats.position)
-    if (near) {
+    const closeEnemy = radar
+      .filter(r => !r.destroyed)
+      .map(res => ({ res, dist: dist2(res.position, stats.position) }))
+    if (closeEnemy.length > 0) {
+      const nearestEnemy = closeEnemy.reduce((acc, val) =>
+        acc.dist > val.dist ? val : acc
+      )
       return geometry.turnToTarget({
         ship: bullet,
         source: stats.position,
-        target: {
-          direction: 0,
-          speed: 0,
-          pos: near.enemy.position.pos,
-        },
+        target: { direction: 0, speed: 0, pos: nearestEnemy.res.position.pos },
       })
     }
   }
@@ -91,17 +92,19 @@ export const buildHomingTorpedo = (target: HomingTarget) =>
 const mineTo = ({ bullet, stats, memory, radar }: BulletContext) => {
   memory.armedTime--
   if (memory.armedTime < 0) {
-    const near = nearestEnemy(radar, stats.position)
-    if (near) {
+    const closeEnemy = radar
+      .filter(r => !r.destroyed)
+      .map(res => ({ res, dist: dist2(res.position, stats.position) }))
+    if (closeEnemy.length > 0) {
+      const nearestEnemy = closeEnemy.reduce((acc, val) =>
+        acc.dist > val.dist ? val : acc
+      )
       if (stats.position.speed < 0.2) return bullet.thrust()
+
       return geometry.turnToTarget({
         ship: bullet,
         source: stats.position,
-        target: {
-          direction: 0,
-          speed: 0,
-          pos: near.enemy.position.pos,
-        },
+        target: { direction: 0, speed: 0, pos: nearestEnemy.res.position.pos },
       })
     }
   }
