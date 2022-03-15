@@ -2,7 +2,7 @@ import { Bullet } from '../ship'
 import { buildTorpedo, buildHomingTorpedo, buildMine } from './builder'
 
 export const BASIC_BULLET: Bullet = {
-  id: 'bullet',
+  id: 'basic-bullet',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
@@ -17,7 +17,7 @@ export const BASIC_BULLET: Bullet = {
 }
 
 export const TORPEDO: Bullet = {
-  id: 'bullet',
+  id: 'torpedo',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
@@ -33,7 +33,7 @@ export const TORPEDO: Bullet = {
 }
 
 export const MINE: Bullet = {
-  id: 'bullet',
+  id: 'mine',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
@@ -49,7 +49,7 @@ export const MINE: Bullet = {
 }
 
 export const HOMING_TORPEDO: Bullet = {
-  id: 'bullet',
+  id: 'homing-torpedo',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
@@ -65,7 +65,7 @@ export const HOMING_TORPEDO: Bullet = {
 }
 
 export const FAST_BULLET: Bullet = {
-  id: 'bullet',
+  id: 'fast-bullet',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
@@ -80,7 +80,7 @@ export const FAST_BULLET: Bullet = {
 }
 
 export const LONG_BULLET: Bullet = {
-  id: 'bullet',
+  id: 'long-bullet',
   position: {
     pos: { x: 0, y: 0 },
     direction: 0,
