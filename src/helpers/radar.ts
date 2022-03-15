@@ -10,11 +10,14 @@ export type Options = { all: boolean }
  * options.all is false by default. */
 export function closeEnemies(
   radar: RadarResult[],
+  team: string,
   position: Position,
   options?: Options
 ) {
   const keep = options?.all ?? false
-  const alive = keep ? radar : radar.filter(r => !r.destroyed)
+  const alive = keep
+    ? radar
+    : radar.filter(r => r.team !== team && !r.destroyed)
   return alive.map(enemy => {
     const d = dist2(enemy.position, position)
     return { enemy, dist2: d }
@@ -33,11 +36,13 @@ const enemyByDist = (enemies: Enemy[]) => {
 export function nearestEnemy(enemies: Enemy[]): Enemy | undefined
 export function nearestEnemy(
   radar: RadarResult[],
+  team: string,
   position: Position,
   options?: Options
 ): Enemy | undefined
 export function nearestEnemy(
   array: any[],
+  team?: string,
   position?: Position,
   options?: Options
 ) {
@@ -46,9 +51,9 @@ export function nearestEnemy(
     const enemies: Enemy[] = array
     return enemyByDist(enemies)
   } else {
-    if (!position) return
+    if (!position || !team) return
     const radar: RadarResult[] = array
-    const enemies = closeEnemies(radar, position, options)
+    const enemies = closeEnemies(radar, team, position, options)
     return enemyByDist(enemies)
   }
 }
