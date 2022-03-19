@@ -63,7 +63,7 @@ export class Engine extends EventTarget {
           if (!event) return
           const type = event.data.type
           if (type === 'step') w.messages.step = event.data
-          if (type === 'log') helpers.events.log(this, ...event.data.values)
+          if (type === 'log.add') helpers.events.log(this, ...event.data.values)
           if (type === 'comm') {
             const team = this.state.ships.find(s => s.id === w.id)?.team
             if (team) {
