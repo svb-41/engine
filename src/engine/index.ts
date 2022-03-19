@@ -18,6 +18,7 @@ import {
   INSTRUCTION,
 } from './control'
 import { geometry } from '../helpers'
+import * as helpers from '../helpers'
 import { Channel } from './comm'
 const { TWO_PI } = geometry
 
@@ -62,6 +63,7 @@ export class Engine extends EventTarget {
           if (!event) return
           const type = event.data.type
           if (type === 'step') w.messages.step = event.data
+          if (type === 'log') helpers.events.log(this, ...event.data.values)
           if (type === 'comm') {
             const team = this.state.ships.find(s => s.id === w.id)?.team
             if (team) {

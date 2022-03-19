@@ -3,3 +3,7 @@ export const log = (...args: any[]) => {
     console.log(...args)
   }
 }
+
+export const clear = () => postMessage({ type: 'log.clear' })
+export const logger = (...values: any[]) =>
+  postMessage({ type: 'log.add', values })
