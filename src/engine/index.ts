@@ -371,6 +371,7 @@ const getRadarResults = (
           position: s.position,
           team: s.team,
           destroyed: s.destroyed,
+          signature: s.signature,
         }))
     : []
 

@@ -11,6 +11,7 @@ export type Ship = {
   weapons: Array<{ bullet: Bullet; amo: number; coolDown: number }>
   shipClass: SHIP_CLASS
   stealth: number
+  signature: string
 }
 
 /** All possible classes for a Ship. */
@@ -69,6 +70,7 @@ export type RadarResult = {
   size: number
   team: string
   destroyed: boolean
+  signature: string
 }
 
 /** Generates the next position of the position. */

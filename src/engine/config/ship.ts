@@ -9,6 +9,7 @@ import {
 } from './weapon'
 
 export const FIGHTER: Ship = {
+  signature: '',
   id: 'fighter',
   shipClass: SHIP_CLASS.FIGHTER,
   position: {
@@ -28,6 +29,7 @@ export const FIGHTER: Ship = {
 }
 
 export const SCOUT: Ship = {
+  signature: '',
   id: 'scout',
   shipClass: SHIP_CLASS.SCOUT,
   position: {
@@ -44,6 +46,7 @@ export const SCOUT: Ship = {
 }
 
 export const BOMBER: Ship = {
+  signature: '',
   id: 'bomber',
   shipClass: SHIP_CLASS.BOMBER,
   position: {
@@ -64,6 +67,7 @@ export const BOMBER: Ship = {
 }
 
 export const CRUISER: Ship = {
+  signature: '',
   id: 'cruiser',
   shipClass: SHIP_CLASS.CRUISER,
   position: {
@@ -83,6 +87,7 @@ export const CRUISER: Ship = {
 }
 
 export const STEALTH: Ship = {
+  signature: '',
   id: 'stealth',
   shipClass: SHIP_CLASS.STEALTH,
   position: {
@@ -105,6 +110,7 @@ export const STEALTH: Ship = {
 }
 
 export const DESTROYER: Ship = {
+  signature: '',
   id: 'destroyer',
   shipClass: SHIP_CLASS.DESTROYER,
   position: {
@@ -129,6 +135,7 @@ export const DESTROYER: Ship = {
 }
 
 export const MOTHER_BASE: Ship = {
+  signature: '',
   id: 'base',
   shipClass: SHIP_CLASS.BASE,
   position: {

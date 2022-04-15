@@ -11,7 +11,6 @@ import {
 import { Ship, dist2 } from '../ship'
 import { BulletController, BulletContext } from '../control'
 import { geometry } from '../../helpers'
-import { nearestEnemy } from '../../helpers/radar'
 
 export type BuildShipProps = {
   team?: string
@@ -21,13 +20,23 @@ export type BuildShipProps = {
   }
 }
 
+const digestMessage = async (message: string) => {
+  const msgUint8 = new TextEncoder().encode(message)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+  return hashHex
+}
+
 const buildShip = (blueprint: Ship) => {
-  return (props: BuildShipProps): Ship => {
+  return async (props: BuildShipProps): Promise<Ship> => {
     const defaultPosition = { pos: { x: 0, y: 0 }, direction: 0 }
     const { position = defaultPosition, team = 'none' } = props
+    const id = uuid()
     return {
       ...blueprint,
-      id: uuid(),
+      signature: await digestMessage(id),
+      id,
       weapons: blueprint.weapons.map(w => ({ ...w })),
       position: { ...blueprint.position, ...position },
       team,
