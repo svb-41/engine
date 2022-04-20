@@ -1,6 +1,6 @@
 {
   "name": "@svb-41/engine",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "main": "build/index.js",
   "repository": "git@github.com:svb-41/engine.git",
   "authors": [
