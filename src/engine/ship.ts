@@ -3,6 +3,7 @@ import { BulletController } from './control'
 /** A Ship is identified by an ID (an UUID), and has various stats. team is a color. */
 export type Ship = {
   id: string
+  price: number
   position: Position
   stats: Stats
   destroyed: boolean
