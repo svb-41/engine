@@ -6,7 +6,7 @@ import {
   CRUISER,
   BOMBER,
   SCOUT,
-  // BASE,
+  BASE,
 } from './ship'
 import { Ship, dist2 } from '../ship'
 import { BulletController, BulletContext } from '../control'
@@ -50,6 +50,7 @@ export const buildDestroyer = buildShip(DESTROYER)
 export const buildCruiser = buildShip(CRUISER)
 export const buildBomber = buildShip(BOMBER)
 export const buildScout = buildShip(SCOUT)
+export const buildBase = buildShip(BASE)
 
 type Target = { x: number; y: number }
 type HomingTarget = { target: Target; armedTime: number }

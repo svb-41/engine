@@ -175,7 +175,7 @@ export const DESTROYER: Ship = {
   ],
 }
 
-export const MOTHER_BASE: Ship = {
+export const BASE: Ship = {
   signature: '',
   id: 'base',
   price: 5000,
@@ -185,10 +185,10 @@ export const MOTHER_BASE: Ship = {
     direction: 0,
     speed: 0,
   },
-  stats: { size: 32, acceleration: 0, turn: Math.PI / 30, detection: 10 },
+  stats: { size: 128, acceleration: 0, turn: Math.PI / 2000, detection: 10000 },
   destroyed: false,
   team: 'none',
   bulletsFired: 0,
   stealth: 600,
-  weapons: [],
+  weapons: [{ bullet: TORPEDO, amo: 800, coolDown: 0 }],
 }
